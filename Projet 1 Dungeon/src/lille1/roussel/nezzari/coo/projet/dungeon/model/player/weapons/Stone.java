@@ -18,7 +18,7 @@ public class Stone extends OneUseObjects {
 	}
 	
 	protected void throwStone() {
-		if(Game.getInstance().getCurrentState() == GAMES_STATES.FIGHTSTATE) {
+		if(Game.getInstance().getCurrentState() == GAMES_STATES.INFIGHTSTATE) {
 			Fight currentFight = ((FightRoom) Game.getInstance().getCurrentDungeon().getCurrentRoom()).getFight();
 			currentFight.damageFighter(currentFight.getMonster(), getDamage());
 		}

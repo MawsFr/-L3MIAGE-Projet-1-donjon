@@ -6,8 +6,9 @@ import lille1.roussel.nezzari.coo.projet.dungeon.model.Game;
 public class DescribeCommand extends Command {
 	
 	@Override
-	public void execute(String substring) {
+	public void execute(String userInput) {
 		try {
+//			System.out.println(Game.getInstance().getCurrentDungeon().getCurrentRoom());
 			System.out.println(Game.getInstance().getCurrentDungeon().getCurrentRoom().getDescription());
 		} catch (CannotBeUsedException e) {
 			System.err.println(e.getMessage());

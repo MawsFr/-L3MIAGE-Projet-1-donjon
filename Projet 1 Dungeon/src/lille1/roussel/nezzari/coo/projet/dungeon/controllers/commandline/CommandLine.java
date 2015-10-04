@@ -13,7 +13,7 @@ public class CommandLine {
 
 	public enum Commands {
 		//TODO: Add attribute Command to store the associated command ?
-		ME, GO, USE, DESCRIBE, PUSH /*button*/, OPEN /*treasure*/, ATTACK, HELP, EQUIP, UNEQUIP;
+		ME, GO, USE, DESCRIBE, PUSH /*button*/, OPEN /*treasure*/, ATTACK, HELP, EQUIP, UNEQUIP, DRINK;
 
 		public static Commands get(String command) {
 			for(Commands c : Commands.values()) {
@@ -42,6 +42,8 @@ public class CommandLine {
 		this.commands.put(Commands.HELP, new HelpCommand(this));
 		this.commands.put(Commands.EQUIP, new EquipCommand());
 		this.commands.put(Commands.UNEQUIP, new UnequipCommand());
+		this.commands.put(Commands.DRINK, new DrinkCommand());
+		
 		
 
 	}
@@ -72,7 +74,7 @@ public class CommandLine {
 
 		if(c != null) {
 			try{
-			if(Game.getInstance().getCurrentState() != GAMES_STATES.FIGHTSTATE) { //if we're not in a fight
+			if(Game.getInstance().getCurrentState() != GAMES_STATES.INFIGHTSTATE) { //if we're not in a fight
 				if(splittedCommand.length == 1) { //if there are no arguments
 					commands.get(c).execute(splittedCommand[0]);
 				} else {

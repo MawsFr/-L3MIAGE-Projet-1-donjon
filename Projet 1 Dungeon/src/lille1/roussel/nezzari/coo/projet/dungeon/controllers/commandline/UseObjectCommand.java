@@ -18,7 +18,6 @@ public class UseObjectCommand extends Command {
 
 	@Override
 	public void execute(String userInput) {
-		//TODO : for weapons show equipe or unequip
 		if(Game.getInstance().getPlayer().getBag().isEmpty()) {
 			System.out.println("You have no items in your bag !");
 			return;
@@ -35,9 +34,6 @@ public class UseObjectCommand extends Command {
 			System.out.println("#####\tNORMAL ITEMS\t#####");
 			for(int i = 0; i < items.size(); ++i) {
 				System.out.print((j+1) + " - " + items.get(i));
-				if(i % 3 == 0) {
-					System.out.println();
-				}
 				++j;
 			}
 			System.out.println();
@@ -84,7 +80,7 @@ public class UseObjectCommand extends Command {
 			}
 		} else {
 			try {
-				if(Game.getInstance().getCurrentState() == GAMES_STATES.FIGHTSTATE) {
+				if(Game.getInstance().getCurrentState() == GAMES_STATES.INFIGHTSTATE) {
 					item.useInFight();
 				} else {
 					item.use();

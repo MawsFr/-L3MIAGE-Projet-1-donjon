@@ -31,13 +31,13 @@ public class FightTest {
 		game = Game.getInstance();
 		game.setPlayer(player);
 		fight = new Fight();
-		game.setCurrentState(GAMES_STATES.PLAYSTATE);
+		game.setCurrentState(GAMES_STATES.INGAMESTATE);
 	}
 	
 	@Test
 	public void gameFightStateTest() {
 		fight.begin();
-		assertEquals(GAMES_STATES.FIGHTSTATE, game.getCurrentState());
+		assertEquals(GAMES_STATES.INFIGHTSTATE, game.getCurrentState());
 	}
 	
 	@Test

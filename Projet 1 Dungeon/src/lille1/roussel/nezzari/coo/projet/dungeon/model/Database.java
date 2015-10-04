@@ -15,10 +15,12 @@ import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Direction;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.ExitRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.FightRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.NormalRoom;
+import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.RestoreRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Room;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.TrapRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.TreasureRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.Button;
+import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.Fountain;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.Treasure;
 
 public class Database {
@@ -120,15 +122,16 @@ public class Database {
 		   02 : normal room
 		   03 : button room that unlock room 04
 		   04 : normal room containing the key for room 5
-		   08 : Godammit a trap !
+		   08 : Godamn it a trap !
 		   06 : Fight against the boss to go to the trasure room 07
 		   07 : treasure room that unlocks room 9
 		   09 : destiny road
 		   10 : continuing the destiny road
-		   10 : finishing the destiny road
+		   11 : finishing the destiny road
 		   12 : a normal room
 		   14 : a second normal room
 		   15 : button room containing a key : The button unlocks 13, the key unlocks the exit !
+		   16 : fountain room restore all HealthPoint !
 		   Ex : EXIT !
 		   
 		 */
@@ -167,14 +170,26 @@ public class Database {
 		Room dungeon2room14 = new NormalRoom("Fifth intersection", dungeon2);
 		Button dungeon2room13Button = new Button("Last button", dungeon2room13);
 		Room dungeon2room15 = new ButtonRoom("Last button Room", dungeon2, dungeon2room13Button);
-		
+		Fountain dungeon2room16Fountain = new Fountain("Fountain of Health");
+		Room dungeon2room16 = new RestoreRoom("Restore Room", dungeon2, dungeon2room16Fountain);
 		Room dungeon2Exit = new ExitRoom("exit", dungeon2);
 		
 		Key exitKey = new Key("Exit key", dungeon2Exit);
 		
 		dungeon2room15.addItemToFind(exitKey);
 		
+		///////// DESCRIPTION //////////
 		
+		dungeon2entrance.setDescription("You are in the hall of the dungeon, welcome boy ! :)");
+		dungeon2room2.setDescription("The first room of this dark dungeon, prepare yourself stranger ! ");
+		dungeon2room3.setDescription("Use this button, if you want to continue your quest, but does it worth it ? ");
+		dungeon2room4.setDescription("You see a key in this room, but why it's here ? ");
+		dungeon2room3Button.setMessageAfterUse("You heard something grind on the west, you can investigate if you are ready !" );
+		dungeon2room7.setDescription("The treasur room, happy for you ! If you can go out in one piece ! ");
+		dungeon2room9Treasure.setMessageAfterUse("You hear a new creaky sound, like the opening of a door, on the south west.");
+		dungeon2room9.setDescription("This is the destiny road, the wheel of fate is spinning !");
+		dungeon2room10.setDescription("Keep running, it's the best to do here !");
+		dungeon2room11.setDescription(" ");
 		///////// NEIGHBORS SETTINGS /////////
 		
 		dungeon2entrance.addNeighbor(Direction.North, dungeon2room2);
@@ -200,7 +215,7 @@ public class Database {
 		dungeon2room14.addNeighbor(Direction.North, dungeon2Exit);
 		
 		dungeon2room14.addNeighbor(Direction.West, dungeon2room15);
-		
+		dungeon2room7.addNeighbor(Direction.North, dungeon2room16);
 		dungeon2.addRoom(
 				dungeon2entrance, 
 				dungeon2room2, 
@@ -217,6 +232,7 @@ public class Database {
 				dungeon2room13, 
 				dungeon2room14, 
 				dungeon2room15, 
+				dungeon2room16,
 				dungeon2Exit
 				);
 		

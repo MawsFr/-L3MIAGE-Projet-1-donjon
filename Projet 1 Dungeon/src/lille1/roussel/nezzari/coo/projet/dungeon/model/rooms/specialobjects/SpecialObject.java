@@ -10,6 +10,9 @@ public abstract class SpecialObject implements ISpecialObject {
 	protected boolean used;
 	protected String messageAfterUse;
 	
+	public SpecialObject() {
+	}
+	
 	public SpecialObject(String name, IRoom associatedRoom) {
 		this.associatedRoom = associatedRoom;
 	}

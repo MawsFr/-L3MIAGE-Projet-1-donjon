@@ -25,7 +25,7 @@ public class Fight {
 	public void begin() {
 		//insert command here
 		this.player = Game.getInstance().getPlayer();
-		Game.getInstance().setCurrentState(GAMES_STATES.FIGHTSTATE);
+		Game.getInstance().setCurrentState(GAMES_STATES.INFIGHTSTATE);
 		
 	}
 	

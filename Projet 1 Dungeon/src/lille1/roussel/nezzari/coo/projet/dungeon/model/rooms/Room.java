@@ -79,11 +79,11 @@ public abstract class Room implements IRoom {
 		if(neighbor == null) {
 			throw new IllegalArgumentException("You must specify a neighbor to add !");
 		}
-		
+
 		if(neighbor == this) {
 			throw new IllegalArgumentException("A room cannot be its neighbor !");
 		}
-		
+
 		if(!this.neighbors.get(direction).contains(neighbor)) 
 			this.neighbors.get(direction).add(neighbor);
 		if(!neighbor.getNeighbors().get(Direction.getOpposite(direction)).contains(this))
@@ -152,11 +152,11 @@ public abstract class Room implements IRoom {
 		if(name == null) {
 			throw new IllegalArgumentException("You must specify a name !");
 		}
-		
+
 		if(name.isEmpty()) {
 			throw new IllegalArgumentException("You must specify a non-empty name !");
 		}
-		
+
 		this.name = name;
 	}
 
@@ -164,11 +164,6 @@ public abstract class Room implements IRoom {
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getDescription()
 	 */
 	public String getDescription() throws CannotBeUsedException {
-		if(specialObject != null) {
-			if(!specialObject.isUsed()) {
-				specialObject.use();
-			}
-		}
 		return description;
 	}
 
@@ -185,7 +180,77 @@ public abstract class Room implements IRoom {
 	 */
 	@Override
 	public String toString() {
-		return this.name;
+		String s = "";
+		//		return this.name;
+		
+		
+		if(this.hasNeighbor(Direction.North)) {
+			int nbNorthNeighbors = this.neighbors.get(Direction.North).size();
+			if(this.hasNeighbor(Direction.East) && this.hasNeighbor(Direction.West)) {
+				s += "\n------[" + nbNorthNeighbors + "]------.";
+				
+			} else {
+				if(this.hasNeighbor(Direction.West)) {
+					s += ".";
+				} else {
+					s += ".-";
+				}
+				s += "-----[" + nbNorthNeighbors + "]-----";
+				if(this.hasNeighbor(Direction.East)) {
+					s += ".";
+				} else {
+					s += "-.";
+				}
+			}
+		} else {
+			s += "\n .-------------.";
+		}
+
+		if(this.neighbors.get(Direction.West).size() == 0) {
+			s += "\n|\t\t|";
+			s += "\n|\t\t|";
+			s += "\n|\tYou";
+		} else {
+			s += "\n |\t\t|";
+			s += "\n |\t\t|";
+			s += "\n[" + this.neighbors.get(Direction.West).size() + "]\tYou";
+		}
+		
+		if(this.neighbors.get(Direction.East).size() == 0) {
+			s += "\t|";
+			s += "\n|\t\t|";
+			s += "\n|\t\t|";
+		} else {
+			s += "\t[" + this.neighbors.get(Direction.East).size() + "]";
+			s += "\n |\t\t|";
+			s += "\n |\t\t|";
+		}
+		
+		
+		
+		if(this.hasNeighbor(Direction.South)) {
+			int nbNorthNeighbors = this.neighbors.get(Direction.South).size();
+			if(this.hasNeighbor(Direction.East) && this.hasNeighbor(Direction.West)) {
+				s += "\n";
+			} else {
+				if(this.hasNeighbor(Direction.West)) {
+					s += ".";
+				} else {
+					s += ".-";
+				}
+				s += "-----[" + nbNorthNeighbors + "]-----";
+				if(this.hasNeighbor(Direction.East)) {
+					s += ".";
+				} else {
+					s += "-.";
+				}
+			}
+		} else {
+			s += "\n .-------------.";
+		}
+		
+
+		return s;
 	}
 
 	/* (non-Javadoc)
@@ -253,18 +318,23 @@ public abstract class Room implements IRoom {
 		return false;
 	}
 
+	@Override
+	public boolean hasNeighbor(Direction direction) {
+		return !this.neighbors.get(direction).isEmpty();
+	}
+
 	public boolean isNeighborOf(IRoom room) {
 		return room.hasNeighbor(this);
 	}
 
-	
+
 	public void setDungeon(Dungeon dungeon) {
 		if(dungeon == null) {
 			throw new IllegalArgumentException("You must pass a non-null dungeon");
 		}
 		this.dungeon = dungeon;
 	}
-	
+
 	public Dungeon getDungeon() {
 		return dungeon;
 	}

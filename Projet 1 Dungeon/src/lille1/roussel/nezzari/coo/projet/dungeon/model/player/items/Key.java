@@ -26,6 +26,8 @@ public class Key extends BagItem {
 		
 	}
 	
+	
+	
 	public String getMessageAfterUse() {
 		return associatedRoom.getName() + " is unlocked";
 	}

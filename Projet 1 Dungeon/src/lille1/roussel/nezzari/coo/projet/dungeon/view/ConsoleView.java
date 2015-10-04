@@ -39,7 +39,7 @@ public class ConsoleView {
 				game.setPlayer(new Player(userInput));
 				System.out.println("Welcome " + userInput + " :D");
 
-				game.setCurrentState(GAMES_STATES.PLAYSTATE);
+				game.setCurrentState(GAMES_STATES.INGAMESTATE);
 				try {
 					game.setCurrentDungeon(Database.dungeons.get(0));
 					game.getCurrentDungeon().init();
@@ -53,7 +53,7 @@ public class ConsoleView {
 				try{
 					Dungeon nextDungeon = Database.dungeons.get(Database.dungeons.indexOf(Game.getInstance().getCurrentDungeon()) + 1);
 					Game.getInstance().setCurrentDungeon(nextDungeon);
-					game.setCurrentState(GAMES_STATES.PLAYSTATE);
+					game.setCurrentState(GAMES_STATES.INGAMESTATE);
 				} catch (IndexOutOfBoundsException e) {
 					game.setCurrentState(GAMES_STATES.WONGAMESTATE);
 				}
@@ -66,7 +66,7 @@ public class ConsoleView {
 				System.out.println("You've lost the game, my bad :'(");
 				game.setFinished(true);
 				break;
-			case FIGHTSTATE:
+			case INFIGHTSTATE:
 				Fight currentFight = ((FightRoom) game.getCurrentDungeon().getCurrentRoom()).getFight();
 				System.out.println("A fight begins between " + game.getPlayer().getName() + " and " + currentFight.getMonster() +"!");
 				((AttackCommand) commandLine.getCommand(Commands.ATTACK)).setCurrentFight(currentFight);
@@ -100,7 +100,7 @@ public class ConsoleView {
 					game.setCurrentState(GAMES_STATES.LOSTGAMESTATE);
 				} else if(currentFight.getWinner() == game.getPlayer()) {
 					System.out.println("You won the fight !");
-					game.setCurrentState(GAMES_STATES.PLAYSTATE);
+					game.setCurrentState(GAMES_STATES.INGAMESTATE);
 				} else if(currentFight.getWinner() == currentFight.getMonster()) {
 					System.out.println("The monster has won !");
 					game.setCurrentState(GAMES_STATES.LOSTGAMESTATE);
@@ -108,7 +108,7 @@ public class ConsoleView {
 				((AttackCommand) commandLine.getCommand(Commands.ATTACK)).setCurrentFight(null);
 				//may be add game state fightwonstate and fightloststate
 				break;
-			case PLAYSTATE:
+			case INGAMESTATE:
 				System.out.println("");
 				System.out.println(game);
 				commandLine.showPrompt();

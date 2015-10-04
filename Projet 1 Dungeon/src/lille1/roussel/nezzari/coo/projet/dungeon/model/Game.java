@@ -6,7 +6,7 @@ import lille1.roussel.nezzari.coo.projet.dungeon.model.player.Player;
 public class Game {
 	
 	public enum GAMES_STATES {
-		NAMEINPUTSTATE, PLAYSTATE, FIGHTSTATE, WONGAMESTATE, LOSTGAMESTATE, CHANGEDUNGEONSTATE;
+		NAMEINPUTSTATE, INGAMESTATE, INFIGHTSTATE, WONGAMESTATE, LOSTGAMESTATE, CHANGEDUNGEONSTATE;
 	}
 	
 	protected static Game instance;
@@ -61,7 +61,7 @@ public class Game {
 	
 	@Override
 	public String toString() {
-		return "Current dungeon : " + currentDungeon + "\nCurrent room : " + currentDungeon.currentRoom;
+		return "Current dungeon : " + currentDungeon + "\nCurrent room : " + currentDungeon.currentRoom.getName();
 	}
 	
 	

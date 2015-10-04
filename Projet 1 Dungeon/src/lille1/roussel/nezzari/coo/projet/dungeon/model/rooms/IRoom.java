@@ -130,6 +130,7 @@ public interface IRoom {
 	public void setVisited(boolean visited);
 	
 	public boolean hasNeighbor(IRoom room);
+	public boolean hasNeighbor(Direction direction);
 	public boolean isNeighborOf(IRoom room);
 
 }
