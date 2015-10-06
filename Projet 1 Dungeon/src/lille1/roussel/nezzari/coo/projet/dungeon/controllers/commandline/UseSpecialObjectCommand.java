@@ -29,6 +29,6 @@ public abstract class UseSpecialObjectCommand extends Command {
 		System.err.println("This command cannot be used here !");
 	}
 	@Override
-	public abstract void printHelp();
+	public abstract String printHelp();
 	
 }

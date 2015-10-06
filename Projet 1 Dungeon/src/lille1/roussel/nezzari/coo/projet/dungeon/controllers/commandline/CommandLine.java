@@ -3,7 +3,6 @@ package lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline;
 import java.util.HashMap;
 import java.util.Map;
 
-import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.fight.AttackCommand;
 import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.CannotBeUsedException;
 import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.InvalidCommandException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Game;
@@ -43,8 +42,8 @@ public class CommandLine {
 		this.commands.put(Commands.EQUIP, new EquipCommand());
 		this.commands.put(Commands.UNEQUIP, new UnequipCommand());
 		this.commands.put(Commands.DRINK, new DrinkCommand());
-		
-		
+
+
 
 	}
 
@@ -57,7 +56,7 @@ public class CommandLine {
 
 	}
 
-	public void interpretCommand(String userInput) throws InvalidCommandException{
+	public void interpretCommand(String userInput) throws InvalidCommandException, IllegalArgumentException {
 		/* go + direction
 		 * use + object name (in game and battle)
 		 * describe
@@ -67,13 +66,20 @@ public class CommandLine {
 		 * 
 		 */
 
+		if(userInput == null) {
+			throw new IllegalArgumentException("You must type a command !");
+		}
+
 		String[] splittedCommand = userInput.split(" ", 2);
 		String command = splittedCommand[0];
 		Commands c = Commands.get(command);
 
+		if(c == null) {
+			throw new InvalidCommandException("This command doesn't exist !");
+		}
 
-		if(c != null) {
-			try{
+
+		try{
 			if(Game.getInstance().getCurrentState() != GAMES_STATES.INFIGHTSTATE) { //if we're not in a fight
 				if(splittedCommand.length == 1) { //if there are no arguments
 					commands.get(c).execute(splittedCommand[0]);
@@ -87,18 +93,19 @@ public class CommandLine {
 					commands.get(c).executeInFight(splittedCommand[1]);
 				}
 			}
-			} catch (CannotBeUsedException e) {
-				System.err.println(e.getMessage());
-			}
-		} else {
-			throw new InvalidCommandException("This command doesn't exist !");
+		} catch (CannotBeUsedException e) {
+			System.err.println(e.getMessage());
+		} catch (InvalidCommandException e) {
+			System.err.println(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
 		}
 	}
-	
+
 	public Command getCommand(Commands command) {
 		return this.commands.get(command);
 	}
-	
+
 	public Map<Commands, Command> getCommands() {
 		return commands;
 	}

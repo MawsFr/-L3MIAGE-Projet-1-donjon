@@ -13,11 +13,6 @@ public class TreasureRoom extends Room {
 		super(name, dungeon, treasure);
 	}
 	
-	@Override
-	public void enter() {
-		
-	}
-	
 	public Treasure getTreasure() {
 		return (Treasure) this.specialObject;
 	}

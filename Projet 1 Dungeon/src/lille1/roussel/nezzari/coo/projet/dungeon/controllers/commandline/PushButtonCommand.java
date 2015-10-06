@@ -20,8 +20,8 @@ public class PushButtonCommand extends UseSpecialObjectCommand {
 	}
 
 	@Override
-	public void printHelp() {
-		System.out.println("//Push Button Command// : type \"push\" to push the button");
+	public String printHelp() {
+		return "//Push Button Command// : type \"push\" to push the button";
 
 	}
 	

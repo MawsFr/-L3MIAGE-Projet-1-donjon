@@ -55,8 +55,8 @@ public class UnequipCommand extends Command {
 	}
 
 	@Override
-	public void printHelp() {
-		System.out.println("//UNEQUIP COMMAND//: type \"unequip\" to unequip a weapon");
+	public String printHelp() {
+		return "//UNEQUIP COMMAND//: type \"unequip\" to unequip a weapon";
 	}
 
 }

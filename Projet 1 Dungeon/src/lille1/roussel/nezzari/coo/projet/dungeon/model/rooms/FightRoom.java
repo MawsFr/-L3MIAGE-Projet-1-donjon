@@ -1,5 +1,6 @@
 package lille1.roussel.nezzari.coo.projet.dungeon.model.rooms;
 
+import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.CannotBeUsedException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Dungeon;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.fight.Fight;
 
@@ -13,7 +14,8 @@ public class FightRoom extends Room {
 	}	
 
 	@Override
-	public void enter() {
+	public void enter() throws CannotBeUsedException {
+		super.enter();
 		if(!fight.isFinished()) {
 			fight.begin();
 		}

@@ -31,10 +31,4 @@ public class DirectionTest {
 	}
 	
 
-	@Test(expected=IllegalArgumentException.class)
-	public void getBadDirectionTest() {
-		Direction.get("hello");
-	}
-	
-	
 }

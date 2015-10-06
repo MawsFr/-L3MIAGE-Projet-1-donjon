@@ -41,8 +41,8 @@ public class EquipCommand extends Command {
 	}
 	
 	@Override
-	public void printHelp() {
-		
+	public String printHelp() {
+		return "//EQUIP COMMAND// : type equip to equip a weapon";
 	}
 	
 	

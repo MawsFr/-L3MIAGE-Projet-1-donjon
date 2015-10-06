@@ -17,41 +17,13 @@ public class UseObjectCommand extends Command {
 
 
 	@Override
-	public void execute(String userInput) {
+	public void execute(String userInput) throws CannotBeUsedException {
 		if(Game.getInstance().getPlayer().getBag().isEmpty()) {
-			System.out.println("You have no items in your bag !");
-			return;
+			throw new CannotBeUsedException("You have no items in your bag !");
 		}
+		
 		System.out.println("What do you want to use ?");
-		Bag bag = Game.getInstance().getPlayer().getBag();
-		List<Weapon> weapons = bag.getWeapons();
-		List<IBagItem> items = bag.getItems();
-		items.removeAll(weapons);
-		int j = 0;
-		if(items.isEmpty()) {
-			System.out.println("You don't have normal object.");
-		} else {
-			System.out.println("#####\tNORMAL ITEMS\t#####");
-			for(int i = 0; i < items.size(); ++i) {
-				System.out.print((j+1) + " - " + items.get(i));
-				++j;
-			}
-			System.out.println();
-		}
-
-		if(weapons.isEmpty()) {
-			System.out.println("You don't have any weapons.");
-		} else {
-			System.out.println("#####\tWEAPONS\t#####");
-
-			for(int i = 0; i < weapons.size(); ++i) {
-				System.out.println((j+1) + " - " + weapons.get(i) + ((weapons.get(i).isEquipedToPlayer()) ? " (equiped)" : ""));
-				++j;
-			}
-		}
-
-		items.addAll(weapons);
-		System.out.println("\n0 - Cancel");
+		List<IBagItem> items = showBagContent();
 
 		int choice = ConsoleView.sc.nextInt();
 		ConsoleView.sc.nextLine();
@@ -99,14 +71,47 @@ public class UseObjectCommand extends Command {
 		
 	}
 
+	public List<IBagItem> showBagContent() {
+		Bag bag = Game.getInstance().getPlayer().getBag();
+		List<Weapon> weapons = bag.getWeapons();
+		List<IBagItem> items = bag.getItems();
+		items.removeAll(weapons);
+		int j = 0;
+		if(items.isEmpty()) {
+			System.out.println("You don't have normal object.");
+		} else {
+			System.out.println("#####\tNORMAL ITEMS\t#####");
+			for(int i = 0; i < items.size(); ++i) {
+				System.out.print((j+1) + " - " + items.get(i));
+				++j;
+			}
+			System.out.println();
+		}
+
+		if(weapons.isEmpty()) {
+			System.out.println("You don't have any weapons.");
+		} else {
+			System.out.println("#####\tWEAPONS\t#####");
+
+			for(int i = 0; i < weapons.size(); ++i) {
+				System.out.println((j+1) + " - " + weapons.get(i) + ((weapons.get(i).isEquipedToPlayer()) ? " (equiped)" : ""));
+				++j;
+			}
+		}
+
+		items.addAll(weapons);
+		System.out.println("\n0 - Cancel");
+		return items;
+	}
+
 	@Override
-	public void executeInFight(String userInput) {
+	public void executeInFight(String userInput) throws CannotBeUsedException {
 		execute(userInput);
 	}
 
 	@Override
-	public void printHelp() {
-		System.out.println("//Use Object Command// : Type \"use + object name\" to use an object");
+	public String printHelp() {
+		return "//Use Object Command// : Type \"use + object name\" to use an object";
 
 	}
 

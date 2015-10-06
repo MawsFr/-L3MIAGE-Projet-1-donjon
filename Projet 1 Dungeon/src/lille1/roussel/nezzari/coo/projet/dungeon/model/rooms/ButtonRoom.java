@@ -10,9 +10,6 @@ public class ButtonRoom extends Room {
 		button.setRoomWhereTheButtonIs(this);
 	}
 	
-	@Override
-	public void enter() {}
-	
 	public Button getButton() {
 		return (Button) this.specialObject;
 	}

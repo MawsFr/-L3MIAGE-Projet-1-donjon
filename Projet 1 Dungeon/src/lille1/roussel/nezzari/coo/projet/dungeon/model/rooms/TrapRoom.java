@@ -1,5 +1,6 @@
 package lille1.roussel.nezzari.coo.projet.dungeon.model.rooms;
 
+import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.CannotBeUsedException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Dungeon;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Game;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Game.GAMES_STATES;
@@ -10,7 +11,8 @@ public class TrapRoom extends Room {
 		super(name, dungeon);
 	}
 
-	public void enter() {
+	public void enter() throws CannotBeUsedException {
+		super.enter();
 		looseGame();
 		
 	}

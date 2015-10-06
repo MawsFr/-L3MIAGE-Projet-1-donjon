@@ -1,6 +1,5 @@
 package lille1.roussel.nezzari.coo.projet.dungeon.model.rooms;
 
-import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.CannotBeUsedException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Dungeon;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.Fountain;
 
@@ -9,10 +8,5 @@ public class RestoreRoom extends Room {
 		super("Fountain", dungeon, fountain);
 
 	}
-
-	@Override
-	public void enter() throws CannotBeUsedException {
-
-	}	
 
 }

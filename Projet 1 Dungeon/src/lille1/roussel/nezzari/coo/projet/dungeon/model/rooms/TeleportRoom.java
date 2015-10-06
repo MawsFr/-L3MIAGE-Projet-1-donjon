@@ -18,6 +18,7 @@ public class TeleportRoom extends Room {
 
 	@Override
 	public void enter() throws CannotBeUsedException {
+		super.enter();
 		teleporter.use();
 	}
 

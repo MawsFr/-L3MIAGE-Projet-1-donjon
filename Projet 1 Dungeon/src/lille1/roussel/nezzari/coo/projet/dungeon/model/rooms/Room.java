@@ -12,7 +12,10 @@ import lille1.roussel.nezzari.coo.projet.dungeon.model.player.items.IBagItem;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.ISpecialObject;
 
 public abstract class Room implements IRoom {
+	
+	protected static int nbRooms = 0;
 
+	protected int id;
 	protected Dungeon dungeon;
 	protected String name;
 	protected String description;
@@ -33,6 +36,8 @@ public abstract class Room implements IRoom {
 	}
 
 	public Room(String name, Dungeon dungeon, boolean visible, boolean locked, ISpecialObject specialObject) {
+		id = nbRooms;
+		nbRooms ++;
 		setName(name);
 		setDungeon(dungeon);
 		this.itemsToFind = new ArrayList<IBagItem>();
@@ -53,8 +58,17 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#enter()
 	 */
-	public abstract void enter() throws CannotBeUsedException;
+	@Override
+	public void enter() throws CannotBeUsedException {
+		if(this.locked) {
+			throw new CannotBeUsedException("You need a key or to press a button to unlock " + this.getName() + " and access it !");
+		}
+	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#findAllItems()
+	 */
+	@Override
 	public boolean findAllItems() throws CannotBeUsedException, AlreadyUnlockedRoomException {
 		if(itemsToFind.size() <= 0) {
 			return false;
@@ -72,9 +86,7 @@ public abstract class Room implements IRoom {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#addNeighbor(lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Direction, lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Room)
-	 */
+	@Override
 	public void addNeighbor(Direction direction, IRoom neighbor) throws IllegalArgumentException {
 		if(neighbor == null) {
 			throw new IllegalArgumentException("You must specify a neighbor to add !");
@@ -90,21 +102,27 @@ public abstract class Room implements IRoom {
 			neighbor.getNeighbors().get(Direction.getOpposite(direction)).add(this); //add this to neighbor in the opposite direction
 	}
 
-
-	public void addNeighbors(Direction direction, List<IRoom> neighbors) throws IllegalArgumentException {
-		for(IRoom room : neighbors) {
-			addNeighbor(direction, room);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getNeighbors(lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Direction)
-	 */
+	@Override
 	public List<IRoom> getNeighbors(Direction direction) {
 		return this.neighbors.get(direction);
 
 	}
+	
+	@Override
+	public List<IRoom> getVisibleNeighbors(Direction direction) {
+		List<IRoom> visibleRooms = new ArrayList<IRoom>();
+			List<IRoom> rooms = neighbors.get(direction);
+			for(IRoom room : rooms) {
+				if(room.isVisible()) {
+					visibleRooms.add(room);
+				}
+			}
+		
+		return visibleRooms;
+		
+	}
 
+	@Override
 	public Map<Direction, List<IRoom>> getNeighbors() {
 		return this.neighbors;
 	}
@@ -113,6 +131,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#addItemToFind(lille1.roussel.nezzari.coo.projet.dungeon.model.player.items.IBagItem)
 	 */
+	@Override
 	public void addItemToFind(IBagItem item) throws IllegalArgumentException{
 		if(item == null) {
 			throw new IllegalArgumentException("You must specify an item to add !");
@@ -120,6 +139,10 @@ public abstract class Room implements IRoom {
 		this.itemsToFind.add(item);
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#addItemsToFind(lille1.roussel.nezzari.coo.projet.dungeon.model.player.items.IBagItem)
+	 */
+	@Override
 	public void addItemsToFind(IBagItem... items) throws IllegalArgumentException{
 		for(IBagItem item : items) {
 			addItemToFind(item);
@@ -127,8 +150,9 @@ public abstract class Room implements IRoom {
 	}
 
 	/* (non-Javadoc)
-	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#unclock()
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#unlock()
 	 */
+	@Override
 	public void unlock() throws AlreadyUnlockedRoomException {
 		if(!this.locked) {
 			throw new AlreadyUnlockedRoomException("This room is already unlocked !");
@@ -141,6 +165,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getName()
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -148,6 +173,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setName(java.lang.String)
 	 */
+	@Override
 	public void setName(String name) throws IllegalArgumentException {
 		if(name == null) {
 			throw new IllegalArgumentException("You must specify a name !");
@@ -163,13 +189,15 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getDescription()
 	 */
-	public String getDescription() throws CannotBeUsedException {
+	@Override
+	public String getDescription() {
 		return description;
 	}
 
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setDescription(java.lang.String)
 	 */
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -181,13 +209,22 @@ public abstract class Room implements IRoom {
 	@Override
 	public String toString() {
 		String s = "";
-		//		return this.name;
+		//return this.name;
+		s += "\nName : " + getName() + "\n";
+		s += "\nNeighbours :\n";
 		
+		for(Direction direction : Direction.values()) {
+			s += "\n" + direction + " : " + getVisibleNeighbors(direction).size() + " room(s)";
+		}
 		
-		if(this.hasNeighbor(Direction.North)) {
+		s += "\n"; 
+		
+		return s;
+		
+		/*if(this.hasNeighbor(Direction.North)) {
 			int nbNorthNeighbors = this.neighbors.get(Direction.North).size();
 			if(this.hasNeighbor(Direction.East) && this.hasNeighbor(Direction.West)) {
-				s += "\n------[" + nbNorthNeighbors + "]------.";
+				s += "\n .-----[" + nbNorthNeighbors + "]------.";
 				
 			} else {
 				if(this.hasNeighbor(Direction.West)) {
@@ -229,16 +266,17 @@ public abstract class Room implements IRoom {
 		
 		
 		if(this.hasNeighbor(Direction.South)) {
-			int nbNorthNeighbors = this.neighbors.get(Direction.South).size();
+			int nbSouthNeighbors = this.neighbors.get(Direction.South).size();
 			if(this.hasNeighbor(Direction.East) && this.hasNeighbor(Direction.West)) {
-				s += "\n";
+				s += "\n .-----[" + nbSouthNeighbors + "]------.";
+				
 			} else {
 				if(this.hasNeighbor(Direction.West)) {
 					s += ".";
 				} else {
 					s += ".-";
 				}
-				s += "-----[" + nbNorthNeighbors + "]-----";
+				s += "-----[" + nbSouthNeighbors + "]-----";
 				if(this.hasNeighbor(Direction.East)) {
 					s += ".";
 				} else {
@@ -246,16 +284,17 @@ public abstract class Room implements IRoom {
 				}
 			}
 		} else {
-			s += "\n .-------------.";
-		}
-		
+			
+			s += "\n!_______________!";
+					 
+		} */
 
-		return s;
 	}
 
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setVisible(boolean)
 	 */
+	@Override
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
@@ -263,6 +302,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#isVisible()
 	 */
+	@Override
 	public boolean isVisible() {
 		return visible;
 	}
@@ -270,6 +310,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#lock()
 	 */
+	@Override
 	public void lock() {
 		this.locked = true;
 
@@ -278,6 +319,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#isLocked()
 	 */
+	@Override
 	public boolean isLocked() {
 		return locked;
 	}
@@ -285,6 +327,7 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getSpecialObject()
 	 */
+	@Override
 	public ISpecialObject getSpecialObject() {
 		return specialObject;
 	}
@@ -292,22 +335,36 @@ public abstract class Room implements IRoom {
 	/* (non-Javadoc)
 	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setSpecialObject(lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.ISpecialObject)
 	 */
+	@Override
 	public void setSpecialObject(ISpecialObject specialObject) {
 		this.specialObject = specialObject;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#isVisited()
+	 */
+	@Override
 	public boolean isVisited() {
 		return visited;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setVisited(boolean)
+	 */
+	@Override
 	public void setVisited(boolean visited) {
 		this.visited = visited;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getItemsToFind()
+	 */
+	@Override
 	public List<IBagItem> getItemsToFind() {
 		return itemsToFind;
 	}
 
+	@Override
 	public boolean hasNeighbor(IRoom room) {
 		for(Direction direction : neighbors.keySet()) {
 			if(neighbors.get(direction).contains(room)) {
@@ -318,16 +375,24 @@ public abstract class Room implements IRoom {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#hasNeighbor(lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Direction)
+	 */
 	@Override
 	public boolean hasNeighbor(Direction direction) {
 		return !this.neighbors.get(direction).isEmpty();
 	}
 
+	@Override
 	public boolean isNeighborOf(IRoom room) {
 		return room.hasNeighbor(this);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#setDungeon(lille1.roussel.nezzari.coo.projet.dungeon.model.Dungeon)
+	 */
+	@Override
 	public void setDungeon(Dungeon dungeon) {
 		if(dungeon == null) {
 			throw new IllegalArgumentException("You must pass a non-null dungeon");
@@ -335,8 +400,43 @@ public abstract class Room implements IRoom {
 		this.dungeon = dungeon;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getDungeon()
+	 */
+	@Override
 	public Dungeon getDungeon() {
 		return dungeon;
 	}
 
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#getId()
+	 */
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	/* (non-Javadoc)
+	 * @see lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null) {
+			return false;
+		}
+		if (!(object instanceof Room)) {
+			return false;
+		}
+		
+		Room other = (Room) object;
+		if (id != other.id) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 }

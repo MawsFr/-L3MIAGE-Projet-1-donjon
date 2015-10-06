@@ -1,6 +1,5 @@
+/command/
 /lille1/
-/.DS_Store
-/database/
-/fight/
-/game/
 /rooms/
+/player/
+/dungeon/

@@ -14,9 +14,9 @@ import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.ButtonRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Direction;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.ExitRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.FightRoom;
+import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.IRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.NormalRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.RestoreRoom;
-import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.Room;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.TrapRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.TreasureRoom;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.rooms.specialobjects.Button;
@@ -63,14 +63,14 @@ public class Database {
 		
 		Fight fight1 = new Fight();
 		
-		Room dungeon1Entrance = new NormalRoom("entrance", dungeon1);
-		Room dungeon1room2 = new NormalRoom("intersection", dungeon1);
-		Room dungeon1Fight1 = new FightRoom("fightRoom", dungeon1, fight1);
-		Room dungeon1Trap1 = new TrapRoom("trap", dungeon1);
-		Room dungeon1Exit = new ExitRoom("exit", dungeon1);
+		IRoom dungeon1Entrance = new NormalRoom("entrance", dungeon1);
+		IRoom dungeon1room2 = new NormalRoom("intersection", dungeon1);
+		IRoom dungeon1Fight1 = new FightRoom("fightRoom", dungeon1, fight1);
+		IRoom dungeon1Trap1 = new TrapRoom("trap", dungeon1);
+		IRoom dungeon1Exit = new ExitRoom("exit", dungeon1);
 		
 		Button button1 = new Button("Button", dungeon1Exit);
-		Room dungeon1room6 = new ButtonRoom("Button room", dungeon1, button1);
+		IRoom dungeon1room6 = new ButtonRoom("Button room", dungeon1, button1);
 		dungeon1Fight1.addNeighbor(Direction.East, dungeon1room6);
 		
 		dungeon1Entrance.setDescription("You are in the hall of the dungeon");
@@ -136,14 +136,14 @@ public class Database {
 		   
 		 */
 
-		Room dungeon2entrance = new NormalRoom("Entrance", dungeon2);
-		Room dungeon2room2 = new NormalRoom("First intersection", dungeon2);
+		IRoom dungeon2entrance = new NormalRoom("Entrance", dungeon2);
+		IRoom dungeon2room2 = new NormalRoom("First intersection", dungeon2);
 		
-		Room dungeon2room4 = new NormalRoom("Key room", dungeon2);
+		IRoom dungeon2room4 = new NormalRoom("Key room", dungeon2);
 		Button dungeon2room3Button = new Button("Button", dungeon2room4);
-		Room dungeon2room3 = new ButtonRoom("Button room", dungeon2, dungeon2room3Button);
+		IRoom dungeon2room3 = new ButtonRoom("Button room", dungeon2, dungeon2room3Button);
 		
-		Room dungeon2room5 = new NormalRoom("Second intersection", dungeon2);
+		IRoom dungeon2room5 = new NormalRoom("Second intersection", dungeon2);
 		Key dungeon2room5Key = new Key("Intersection key", dungeon2room5);
 		dungeon2room4.addItemToFind(dungeon2room5Key);
 		
@@ -154,25 +154,25 @@ public class Database {
 		
 		dungeon2room5.addItemsToFind(axe1, potion1, atkPowerUp1, stone1);
 		
-		Room dungeon2room6 = new FightRoom("Boss room", dungeon2, new Fight());
-		Room dungeon2room8 = new TrapRoom("trap", dungeon2);
-		Room dungeon2room9 = new NormalRoom("Continue Room", dungeon2);
+		IRoom dungeon2room6 = new FightRoom("Boss room", dungeon2, new Fight());
+		IRoom dungeon2room8 = new TrapRoom("trap", dungeon2);
+		IRoom dungeon2room9 = new NormalRoom("Continue Room", dungeon2);
 		Treasure dungeon2room9Treasure = new Treasure("Continue Treasure", dungeon2room9);
-		Room dungeon2room7 = new TreasureRoom("Treasure room", dungeon2, dungeon2room9Treasure);
+		IRoom dungeon2room7 = new TreasureRoom("Treasure room", dungeon2, dungeon2room9Treasure);
 		
-		Room dungeon2room10 = new NormalRoom("Continue Room 2", dungeon2);
-		Room dungeon2room11 = new NormalRoom("Continue Room 3", dungeon2);
-		Room dungeon2room12 = new NormalRoom("Third intersection", dungeon2);
-		Room dungeon2room13 = new NormalRoom("Forth intersection", dungeon2);
+		IRoom dungeon2room10 = new NormalRoom("Continue Room 2", dungeon2);
+		IRoom dungeon2room11 = new NormalRoom("Continue Room 3", dungeon2);
+		IRoom dungeon2room12 = new NormalRoom("Third intersection", dungeon2);
+		IRoom dungeon2room13 = new NormalRoom("Forth intersection", dungeon2);
 		Weapon sword2 = new Sword("Sword of Maws");
 		dungeon2room13.addItemToFind(sword2);
 		
-		Room dungeon2room14 = new NormalRoom("Fifth intersection", dungeon2);
+		IRoom dungeon2room14 = new NormalRoom("Fifth intersection", dungeon2);
 		Button dungeon2room13Button = new Button("Last button", dungeon2room13);
-		Room dungeon2room15 = new ButtonRoom("Last button Room", dungeon2, dungeon2room13Button);
+		IRoom dungeon2room15 = new ButtonRoom("Last button Room", dungeon2, dungeon2room13Button);
 		Fountain dungeon2room16Fountain = new Fountain("Fountain of Health");
-		Room dungeon2room16 = new RestoreRoom("Restore Room", dungeon2, dungeon2room16Fountain);
-		Room dungeon2Exit = new ExitRoom("exit", dungeon2);
+		IRoom dungeon2room16 = new RestoreRoom("Restore Room", dungeon2, dungeon2room16Fountain);
+		IRoom dungeon2Exit = new ExitRoom("exit", dungeon2);
 		
 		Key exitKey = new Key("Exit key", dungeon2Exit);
 		

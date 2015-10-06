@@ -18,7 +18,7 @@ public class Button extends SpecialObject {
 			this.associatedRoom.setVisible(true);
 			super.use();
 		} else {
-			//throw exception already pushed button
+			throw new CannotBeUsedException(name + " has already used  !");
 		}
 	}
 	

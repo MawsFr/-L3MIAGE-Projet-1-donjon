@@ -1,6 +1,5 @@
-package lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.fight;
+package lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline;
 
-import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.Command;
 import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.CommandLine.Commands;
 import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.CannotBeUsedException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.fight.Fight;
@@ -32,8 +31,8 @@ public class AttackCommand extends Command {
 	}
 	
 	@Override
-	public void printHelp() {
-		System.out.println("//Attack command// : In fight, type \"attack\" to attack the monster");
+	public String printHelp() {
+		return "//Attack command// : In fight, type \"attack\" to attack the monster";
 		
 	}
 

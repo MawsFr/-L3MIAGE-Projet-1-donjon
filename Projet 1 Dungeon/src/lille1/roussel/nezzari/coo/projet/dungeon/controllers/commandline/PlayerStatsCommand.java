@@ -17,8 +17,8 @@ public class PlayerStatsCommand extends Command {
 	}
 	
 	@Override
-	public void printHelp() {
-		System.out.println("//Player stats// : type \"me\" to see your stats");
+	public String printHelp() {
+		return "//Player stats// : type \"me\" to see your stats";
 	}
 	
 }

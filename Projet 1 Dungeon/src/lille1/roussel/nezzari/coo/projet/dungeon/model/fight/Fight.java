@@ -103,6 +103,10 @@ public class Fight {
 		this.winner = winner;
 	}
 	
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
 	@Override
 	public String toString() {
 		return "Monster : " + monster + "\n" + player;

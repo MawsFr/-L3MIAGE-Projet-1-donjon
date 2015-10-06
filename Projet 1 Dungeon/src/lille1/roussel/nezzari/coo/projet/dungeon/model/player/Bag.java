@@ -65,14 +65,11 @@ public class Bag {
 		items.removeAll(weapons);
 		
 		if(items.isEmpty()) {
-			s += "You don't have normal object.";
+			s += "You don't have normal objects.";
 		} else {
 			s += "#####\tNORMAL ITEMS\t#####";
 			for(int i = 0; i < items.size(); ++i) {
 				s += "- " + items.get(i);
-				if(i % 3 == 0) {
-					s += "\n";
-				}
 			}
 			
 		}
@@ -86,12 +83,10 @@ public class Bag {
 
 			for(int i = 0; i < weapons.size(); ++i) {
 				s += "- " + weapons.get(i) + ((weapons.get(i).isEquipedToPlayer()) ? " (equiped)" : "");
-				if(i % 3 == 0) {
-					s += "\n";
-				}
 			}
 		}
 
+		s += "\n";
 		
 		return s;
 	}

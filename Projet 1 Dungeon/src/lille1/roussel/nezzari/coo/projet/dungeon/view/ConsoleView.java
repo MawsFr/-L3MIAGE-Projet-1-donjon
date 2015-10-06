@@ -2,9 +2,9 @@ package lille1.roussel.nezzari.coo.projet.dungeon.view;
 
 import java.util.Scanner;
 
+import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.AttackCommand;
 import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.CommandLine;
 import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.CommandLine.Commands;
-import lille1.roussel.nezzari.coo.projet.dungeon.controllers.commandline.fight.AttackCommand;
 import lille1.roussel.nezzari.coo.projet.dungeon.exceptions.InvalidCommandException;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Database;
 import lille1.roussel.nezzari.coo.projet.dungeon.model.Dungeon;
@@ -148,6 +148,7 @@ public class ConsoleView {
 	}
 
 	public static void main(String[] args) {
+		
 		Database.initDb();
 		new ConsoleView().run();
 	}

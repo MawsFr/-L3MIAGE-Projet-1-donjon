@@ -9,6 +9,7 @@ public interface IBagItem {
 	public void use() throws CannotBeUsedException, AlreadyUnlockedRoomException; //don't forget to remove from bag
 	public void useInFight() throws CannotBeUsedException;
 	public boolean usedWhenFound();
+	public void setUseWhenFound(boolean useWhenFound);
 	public boolean isUsableInFight();
 	public boolean isRemovedWhenUsed();
 	public boolean isWeapon();

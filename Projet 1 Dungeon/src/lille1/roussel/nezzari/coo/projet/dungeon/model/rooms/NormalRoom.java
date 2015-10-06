@@ -11,8 +11,4 @@ public class NormalRoom extends Room {
 
 	}
 	
-	@Override
-	public void enter() {
-	}
-
 }

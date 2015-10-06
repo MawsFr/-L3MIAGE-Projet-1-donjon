@@ -12,7 +12,7 @@ public class HelpCommand extends Command {
 	@Override
 	public void execute(String substring) {
 		for(Command command : commandLine.getCommands().values()) {
-			command.printHelp();
+			System.out.println(command.printHelp());
 		}
 
 	}
@@ -23,8 +23,7 @@ public class HelpCommand extends Command {
 	}
 
 	@Override
-	public void printHelp() {
-		// TODO Auto-generated method stub
-
+	public String printHelp() {
+		return "//HELP// : type help to see help";
 	}	
 }

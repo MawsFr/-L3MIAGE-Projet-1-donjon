@@ -33,6 +33,6 @@ public enum Direction {
 			}
 		}
 
-		throw new IllegalArgumentException("This direction doesn't exist");
+		return null;
 	}
 }

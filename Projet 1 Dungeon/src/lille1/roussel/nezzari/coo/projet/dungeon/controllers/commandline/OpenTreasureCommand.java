@@ -22,8 +22,8 @@ public class OpenTreasureCommand extends UseSpecialObjectCommand {
 	}
 
 	@Override
-	public void printHelp() {
-		System.out.println("//Open Trasure Command// : Type \"open treasure\" to open treasure");
+	public String printHelp() {
+		return "//Open Trasure Command// : Type \"open treasure\" to open treasure";
 	}
 
 }

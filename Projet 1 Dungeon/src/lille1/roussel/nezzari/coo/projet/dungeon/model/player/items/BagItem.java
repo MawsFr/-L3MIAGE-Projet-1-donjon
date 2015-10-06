@@ -56,6 +56,10 @@ public abstract class BagItem implements IBagItem {
 		return this.name;
 	}
 	
+	public void setUseWhenFound(boolean useWhenFound) {
+		this.useWhenFound = useWhenFound;
+	}
+	
 	public String getMessageAfterUse() {
 		return "";
 	}

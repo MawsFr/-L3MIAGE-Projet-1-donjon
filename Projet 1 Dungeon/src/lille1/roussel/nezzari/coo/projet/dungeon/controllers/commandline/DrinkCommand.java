@@ -14,8 +14,8 @@ public class DrinkCommand extends UseSpecialObjectCommand {
 	}
 	
 	@Override
-	public void printHelp() {
-		System.out.println("//Drink Command// : type \"drink\" to restore your Health Point at the Maximum.");
+	public String printHelp() {
+		return "//Drink Command// : type \"drink\" to restore your Health Point at the Maximum.";
 	}
 
 }
